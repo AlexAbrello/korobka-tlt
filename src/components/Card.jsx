@@ -76,11 +76,11 @@ const CardPrice = styled.h4`
    text-align: center;
 `
 
-export const Card = ({ img, title, price, onClick }) => {
+export const Card = ({ title, price, image }) => {
    return (
-      <Wrapper onClick={onClick}>
+      <Wrapper>
          <SecondWrapper>
-            <CardImage src={img} alt={title} />
+            <CardImage src={image} alt={title} />
             <CardBody>
                <CardTitle>{title}</CardTitle>
                <CardPrice>{price}</CardPrice>

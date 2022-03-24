@@ -23,14 +23,18 @@ const List = styled.div`
 
 export const Result = () => {
 
-   const parts = useSelector(getParts)
+   const result = useSelector(getParts)
+   const partsData = result.data
+   const categoryData = result.categories
+   console.log(result)
 
    return (
       <List>
-         {parts &&
-            parts.map(part => {
+         {partsData &&
+            partsData.map(part => {
                const partInfo = {
                   id: part.id,
+                  image: part.titleimage,
                   title: part.title,
                   price: part.price
                }

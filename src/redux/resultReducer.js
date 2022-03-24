@@ -1,13 +1,30 @@
+import axios from 'axios'
+
+const SET_PARTS = 'SET_PARTS'
+
 let initialState = {
-   partsList: [
-      {id: 1, title: 'some title', price: 12000},
-      {id: 2, title: 'some title', price: 10000},
-      {id: 3, title: 'some title', price: 16000},
-      {id: 4, title: 'some title', price: 22000}
-   ],
+   partsList: {},
    isFetching: false
 }
 
 export const resultReducer = (state = initialState, action) => {
-   return state
+   switch (action.type) {
+      case SET_PARTS:
+         return {
+            ...state,
+            partsList: {...state.partsList, ...action.data}
+         }
+      default: return state
+   }
+}
+
+export const setParts = (data) => ({type: SET_PARTS, data})
+
+export const getParts = (value) => {
+   return (dispatch) => {
+      axios.get(`https://623c162e8e9af587894b96cb.mockapi.io/parts/${value}`)
+         .then(res => {
+         dispatch(setParts(res.data))
+      })
+   }
 }

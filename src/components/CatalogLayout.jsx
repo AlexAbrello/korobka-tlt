@@ -1,6 +1,9 @@
 import Select from 'react-select'
 import styled from 'styled-components'
 import { Outlet } from 'react-router-dom'
+import { useDispatch, useSelector } from 'react-redux'
+
+import { getParts } from '../redux/resultReducer'
 
 const CustomSelect = styled(Select).attrs({
    styles: {
@@ -57,16 +60,21 @@ const options = [
 ]
 
 export const CatalogLayout = () => {
+
+   const dispatch = useDispatch()
+
+   const newValue = ({...options}) => {
+      let value = options.value
+      dispatch(getParts(value))
+   }
+
    return (
       <>
          <Wrapper>
             <CustomSelect
                options={options}
                placeholder='Выберите модель...'
-               isClearable
-               isSearchable={false}
-            /* value={model}
-            onChange={setModel} */
+               onChange={newValue}
             />
          </Wrapper>
          <Outlet />
