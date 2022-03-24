@@ -1,4 +1,9 @@
 import styled from 'styled-components'
+import { useSelector } from 'react-redux'
+import { Link } from 'react-router-dom'
+
+import { getParts } from '../redux/resultSelectors'
+import { Card } from '../components/Card'
 
 const List = styled.div`
    padding: 140px 0 10px;
@@ -17,9 +22,25 @@ const List = styled.div`
 `
 
 export const Result = () => {
+
+   const parts = useSelector(getParts)
+
    return (
       <List>
-         Result
+         {parts &&
+            parts.map(part => {
+               const partInfo = {
+                  id: part.id,
+                  title: part.title,
+                  price: part.price
+               }
+               return (
+                  <Link key={part.id} to={`/result/${part.id}`}>
+                     <Card key={part.id} {...partInfo} />
+                  </Link>
+               )
+            })
+         }
       </List>
    )
 }
