@@ -16,6 +16,7 @@ const Background = styled.div`
    height: 100vh;
    background-color: #474747;
    box-shadow: inset 2px 2px 15px #000, inset -2px -2px 15px #000;
+   overflow-y: auto;
 `
 
 function App() {

@@ -60,20 +60,24 @@ const CardImage = styled.img`
    width: 80%;
    margin: 10px auto;
    outline: 2px solid #818181;
-   border-radius: var(--radii);
+   border-radius: 10px;
    object-fit: cover;
    object-position: center;
-   box-shadow: var(--shadow);
 `
 const CardBody = styled.div`
-   
+   padding: 0px 10px;
+   color: black;
 `
 const CardTitle = styled.h4`
-   padding: 0 1px;
    text-align: center;
+   height: 80px;
 `
 const CardPrice = styled.h4`
    text-align: center;
+
+   ::after {
+      content: ' рублей';
+   }
 `
 
 export const Card = ({ title, price, image }) => {

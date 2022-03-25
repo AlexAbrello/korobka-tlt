@@ -1,7 +1,8 @@
 import Select from 'react-select'
 import styled from 'styled-components'
 import { Outlet } from 'react-router-dom'
-import { useDispatch, useSelector } from 'react-redux'
+import { useDispatch } from 'react-redux'
+import { Link } from 'react-router-dom'
 
 import { getParts } from '../redux/resultReducer'
 
@@ -9,6 +10,7 @@ const CustomSelect = styled(Select).attrs({
    styles: {
       control: (provided) => ({
          ...provided,
+         cursor: 'pointer',
          backgroundColor: 'white',
          color: '#000',
          borderRadius: '5px',
@@ -44,15 +46,25 @@ const CustomSelect = styled(Select).attrs({
    }
 `
 const Wrapper = styled.div`
-   position: absolute;
-   margin: 55px auto 0;
+   position: fixed;
+   top: 50px;
+   left: 50%;
+   transform: translateX(-50%);
    z-index: 10;
-   width: 100%;
+   width: 90%;
+   padding-top: 5px;
+   background-color: #474747;
+   box-shadow: inset 0px 0px #000;
+
+   @media (min-width: 1024px) {
+      width: 95%;
+   }
 `
 const options = [
    { value: 'classic', label: 'Классика' },
+   { value: 'samara', label: 'ВАЗ 2108-99/2113-15' },
    { value: 'niva', label: 'Нива' },
-   { value: 'desytka', label: 'Десятое семейство' },
+   { value: 'desyatka', label: 'Десятое семейство' },
    { value: 'priora', label: 'Приора' },
    { value: 'kalina', label: 'Калина' },
    { value: 'granta', label: 'Гранта' },
@@ -63,7 +75,7 @@ export const CatalogLayout = () => {
 
    const dispatch = useDispatch()
 
-   const newValue = ({...options}) => {
+   const newValue = ({ ...options }) => {
       let value = options.value
       dispatch(getParts(value))
    }
@@ -71,11 +83,13 @@ export const CatalogLayout = () => {
    return (
       <>
          <Wrapper>
-            <CustomSelect
-               options={options}
-               placeholder='Выберите модель...'
-               onChange={newValue}
-            />
+            <Link to='/result'>
+               <CustomSelect
+                  options={options}
+                  placeholder='Выберите модель...'
+                  onChange={newValue}
+               />
+            </Link>
          </Wrapper>
          <Outlet />
       </>
