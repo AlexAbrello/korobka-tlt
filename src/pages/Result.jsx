@@ -22,7 +22,7 @@ const List = styled.div`
       align-items: center;
    }
 `
-const CategoryNav = styled.div`
+export const CategoryNav = styled.div`
    width: 100%;
    height: 50px;
    position: fixed;
@@ -58,19 +58,11 @@ const CategoryButton = styled.button`
       display: none;
    }
 `
-const Loader = styled(BsGearFill)`
+const BigGear = styled(BsGearFill)`
    font-size: 100px;
    color: white;
    opacity: .7;
-   position: absolute;
-   top: 50%;
-   left: 40%;
-   transform: translate(-50%, -50%);
-   animation: whirling 5s linear infinite;
-
-   @media (min-width: 767px) {
-      left: auto;
-   }
+   animation: whirling 6s linear infinite;
 
    @keyframes whirling {
       0% {
@@ -79,6 +71,35 @@ const Loader = styled(BsGearFill)`
       100% {
          transform: rotate(360deg)
       }
+   }
+`
+const SmallGear = styled(BsGearFill)`
+   font-size: 70px;
+   color: #346d94;
+   position: absolute;
+   right: 0;
+   animation: whirlingBack 2.9s linear infinite;
+
+   @keyframes whirlingBack {
+      0% {
+         transform: rotate(0deg)
+      }
+      100% {
+         transform: rotate(-360deg)
+      }
+   }
+`
+const LoaderBox = styled.div`
+   width: 170px;
+   height: 170px;
+   position: absolute;
+   top: 50%;
+   left: 40%;
+   transform: translate(-50%, -50%);
+   transform: rotate(-45deg);
+
+   @media (min-width: 767px) {
+      left: auto;
    }
 `
 
@@ -97,7 +118,10 @@ export const Result = () => {
    return (
       <List>
          {loader
-            ? <Loader />
+            ? <LoaderBox>
+               <SmallGear />
+               <BigGear />
+            </LoaderBox>
             : <>
                {partsData &&
                   partsData.filter(el => el.type.includes(`${category}`)).map(part => {
