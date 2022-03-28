@@ -18,7 +18,7 @@ const Wrapper = styled.div`
    box-shadow: inset 2px 2px 15px #000, inset -2px -2px 15px #000;
    padding: 60px 10px 0;
 `
-const Container = styled.div`
+export const Container = styled.div`
    width: 100%;
    max-width: 1200px;
    flex: 1 1 auto;

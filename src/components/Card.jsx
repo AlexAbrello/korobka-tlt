@@ -54,7 +54,6 @@ const SecondWrapper = styled.div`
     opacity: 0.9;
    }
 `
-
 const CardImage = styled.img`
    display: block;
    width: 80%;
