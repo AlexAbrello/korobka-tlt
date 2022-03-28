@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
+import {MdDoneOutline} from 'react-icons/md'
 
 import { getParts } from '../redux/resultSelectors'
 import { CategoryNav } from './Result'
@@ -96,6 +98,22 @@ const BackButton = styled.button`
       content: '← ';
    }
 `
+const BuyButton = styled.button`
+   color: white;
+   height: 15px;
+   background-color: transparent;
+`
+const BuyNotice = styled.div`
+   color: white;
+   height: 15px;
+   display: flex;
+   align-items: center;
+`
+const Done = styled(MdDoneOutline)`
+   font-size: 16px;
+   fill: green;
+   margin-right: 10px;
+`
 
 export const Details = () => {
 
@@ -104,22 +122,48 @@ export const Details = () => {
    const navigate = useNavigate()
 
    const goBack = () => navigate(-1)
+   const addToCart = () => {
+      let data = []
+      if (localStorage.getItem('cart')) {
+         data = JSON.parse(localStorage.getItem('cart'))
+      }
+      data.push(...detailInfo)
+      localStorage.setItem("cart", JSON.stringify(data))
+      setState(true)
+   }
 
    const detailInfo = (result.data).filter(el => el.id == id)
+
+   const [state, setState] = useState(false)
+
+   useEffect(() => {
+      if (localStorage.getItem('cart')) {
+         let cart = JSON.parse(localStorage.getItem('cart'))
+         cart.map(el => {
+            if (el.id == id) {
+               setState(true)
+            }
+         })
+      }
+   }, [])
 
    return (
       <>
          {
             detailInfo.map(el => {
                return (
-                  <Wrapper key={Math.random()}>
+                  <Wrapper key={el.id}>
                      <TitlePart>{el.title}</TitlePart>
                      <Container>
                         <DescriptionPart dangerouslySetInnerHTML={{ __html: el.discription }} />
                      </Container>
                      <PricePart>
                         <Price>{el.price}</Price>
-                        <button>Добавить в корзину</button>
+                        {
+                           state
+                              ? <BuyNotice><Done /> Уже в корзине</BuyNotice>
+                              : <BuyButton onClick={addToCart}>Добавить в корзину</BuyButton>
+                        }
                      </PricePart>
                   </Wrapper>
                )
