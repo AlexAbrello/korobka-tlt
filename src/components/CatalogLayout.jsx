@@ -68,7 +68,6 @@ const options = [
    { value: 'priora', label: 'Приора' },
    { value: 'kalina', label: 'Калина' },
    { value: 'granta', label: 'Гранта' },
-   { value: 'chevrolet', label: 'Chevrolet Niva' },
 ]
 
 export const CatalogLayout = () => {

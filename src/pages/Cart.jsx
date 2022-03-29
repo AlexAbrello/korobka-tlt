@@ -182,6 +182,15 @@ export const Cart = () => {
       }
    }
 
+   const changeCount = (id, value) => {
+      let elem = cartList.findIndex(el => el.id === id)
+      cartList[elem].count += value
+      if (cartList[elem].count < 1) return deletePosition(id)
+      localStorage.setItem("cart", JSON.stringify(cartList))
+      cartList = JSON.parse(localStorage.getItem('cart'))
+      setList(cartList)
+   }
+
    return (
       <>
          {
@@ -196,9 +205,9 @@ export const Cart = () => {
                                  <Body>
                                     <Counter>
                                        <DeleteButton onClick={() => deletePosition(el.id)} />
-                                       <MinusButton />
-                                       <Number>10 шт.</Number>
-                                       <PlusButton />
+                                       <MinusButton onClick={() => {changeCount(el.id, -1)}}/>
+                                       <Number>{el.count} шт.</Number>
+                                       <PlusButton onClick={() => {changeCount(el.id, 1)}}/>
                                     </Counter>
                                     <Price>{el.price}</Price>
                                  </Body>
