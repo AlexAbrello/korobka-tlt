@@ -1,3 +1,4 @@
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 const Wrapper = styled.div`
@@ -165,22 +166,36 @@ const OrderButton = styled.button`
 
 export const Cart = () => {
 
-   const cartList = JSON.parse(localStorage.getItem('cart'))
+   let cartList = JSON.parse(localStorage.getItem('cart'))
+
+   const [list, setList] = useState(cartList)
+
+   const deletePosition = (id) => {
+      if (cartList.length === 1) {
+         localStorage.clear()
+         setList(null)
+      } else {
+         let data = cartList.filter(el => el.id !== id)
+         localStorage.setItem("cart", JSON.stringify(data))
+         cartList = JSON.parse(localStorage.getItem('cart'))
+         setList(cartList)
+      }
+   }
 
    return (
       <>
          {
-            cartList !== null
+            list !== null
                ? <Wrapper>
                   {
-                     cartList.map(el => {
+                     list.map(el => {
                         return (
-                           <CartElement key={Math.random()}>
+                           <CartElement key={el.id}>
                               <Title>{el.title}</Title>
                               <Container>
                                  <Body>
                                     <Counter>
-                                       <DeleteButton />
+                                       <DeleteButton onClick={() => deletePosition(el.id)} />
                                        <MinusButton />
                                        <Number>10 шт.</Number>
                                        <PlusButton />
