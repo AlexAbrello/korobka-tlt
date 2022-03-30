@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { Link } from 'react-router-dom'
 
 const Wrapper = styled.div`
    display: flex;
@@ -42,7 +43,7 @@ const Body = styled.div`
       justify-content: space-around;
    }
 `
-const Container = styled.div`
+export const Container = styled.div`
    width: 100%;
    max-width: 1200px;
    margin: 0 auto;
@@ -140,7 +141,7 @@ const Price = styled.div`
       content: 'Цена ';
    }
    ::after {
-      content: ' рублей'
+      content: ' рублей';
    }
 `
 const EmptyCart = styled.div`
@@ -150,11 +151,20 @@ const EmptyCart = styled.div`
    transform: translate(-50%,-50%);
    color: white;
 `
-const OrderButton = styled.button`
+const OrderButton = styled(Link).attrs({
+   to: '/form'
+})`
    width: 50%;
    height: 40px;
    max-width: 375px;
-   margin: 0 auto;
+   margin: 30px auto;
+   color: white;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 10px;
+   border: 1px solid white;
+   background-color: transparent;
 
    @media (min-width: 767px) {
       width: 30%;
@@ -163,12 +173,28 @@ const OrderButton = styled.button`
       width: 15%;
    }
 `
+const Total = styled.div`
+   text-align: end;
+   margin-right: 5px;
+
+   ::before {
+      content: 'Общая стоимость: ';
+   }
+   ::after {
+      content: ' рублей';
+   }
+
+   @media (min-width: 767px) {
+      margin-right: 100px;
+   }
+`
 
 export const Cart = () => {
 
    let cartList = JSON.parse(localStorage.getItem('cart'))
 
    const [list, setList] = useState(cartList)
+   const [total, setTotal] = useState(0)
 
    const deletePosition = (id) => {
       if (cartList.length === 1) {
@@ -191,6 +217,13 @@ export const Cart = () => {
       setList(cartList)
    }
 
+   useEffect(() => {
+      if (list) {
+         let sum = list.reduce((total, el) => el.count * el.price + total, 0)
+         setTotal(sum)
+      }
+   }, [list])
+
    return (
       <>
          {
@@ -205,17 +238,20 @@ export const Cart = () => {
                                  <Body>
                                     <Counter>
                                        <DeleteButton onClick={() => deletePosition(el.id)} />
-                                       <MinusButton onClick={() => {changeCount(el.id, -1)}}/>
+                                       <MinusButton onClick={() => changeCount(el.id, -1)} />
                                        <Number>{el.count} шт.</Number>
-                                       <PlusButton onClick={() => {changeCount(el.id, 1)}}/>
+                                       <PlusButton onClick={() => { changeCount(el.id, 1) }} />
                                     </Counter>
-                                    <Price>{el.price}</Price>
+                                    <Price>{el.price * el.count}</Price>
                                  </Body>
                               </Container>
                            </CartElement>
                         )
                      })
                   }
+                  <Container>
+                     <Total>{total}</Total>
+                  </Container>
                   <OrderButton>Оформить заявку</OrderButton>
                </Wrapper>
                : <EmptyCart>

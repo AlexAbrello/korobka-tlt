@@ -10,6 +10,7 @@ import { CatalogLayout } from './components/CatalogLayout'
 import { Result } from './pages/Result'
 import { Details } from './pages/Details'
 import { Cart } from './pages/Cart'
+import { Form } from './pages/Form'
 
 const Background = styled.div`
    width: 100vw;
@@ -34,6 +35,7 @@ function App() {
                <Route path='delivery' element={<Delivery />} />
                <Route path='contacts' element={<Contacts />} />
                <Route path='cart' element={<Cart />} />
+               <Route path='form' element={<Form />} />
             </Routes>
          </main>
       </Background>
