@@ -2,9 +2,11 @@ import axios from 'axios'
 
 const SET_PARTS = 'SET_PARTS'
 const LOADER = 'LOADER'
+const SET_VALUE = 'SET_VALUE'
 
 let initialState = {
    partsList: {},
+   category: 'КПП',
    isFetching: false
 }
 
@@ -20,12 +22,18 @@ export const resultReducer = (state = initialState, action) => {
             ...state,
             isFetching: action.value
          }
+      case SET_VALUE:
+         return {
+            ...state,
+            category: action.category
+         }
       default: return state
    }
 }
 
 export const setParts = (data) => ({type: SET_PARTS, data})
-export const setLoader = (value) => ({ type: LOADER, value})
+export const setLoader = (value) => ({ type: LOADER, value })
+export const setCategoryValue = (category) => ({type: SET_VALUE, category})
 
 export const getParts = (value) => {
    return (dispatch) => {

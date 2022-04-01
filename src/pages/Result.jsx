@@ -1,10 +1,10 @@
 import styled from 'styled-components'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { Link } from 'react-router-dom'
-import { useState } from 'react'
 import { BsGearFill } from 'react-icons/bs'
 
-import { getParts, getLoader } from '../redux/resultSelectors'
+import { getParts, getLoader, getValue } from '../redux/resultSelectors'
+import { setCategoryValue } from '../redux/resultReducer'
 import { Card } from '../components/Card'
 
 const List = styled.div`
@@ -105,15 +105,15 @@ const LoaderBox = styled.div`
 
 export const Result = () => {
 
-   const [category, setCategory] = useState('КПП')
-
+   const category = useSelector(getValue)
    const result = useSelector(getParts)
    const loader = useSelector(getLoader)
+   const dispatch = useDispatch()
 
    const partsData = result.data
    const categoryData = result.categories
 
-   const changeCategory = (e) => setCategory(e.currentTarget.innerText)
+   const changeCategory = (e) => dispatch(setCategoryValue(e.currentTarget.innerText))
 
    return (
       <List>

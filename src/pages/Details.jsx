@@ -2,10 +2,12 @@ import { useEffect, useState } from 'react'
 import { useSelector } from 'react-redux'
 import { useParams, useNavigate } from 'react-router-dom'
 import styled from 'styled-components'
-import {MdDoneOutline} from 'react-icons/md'
+import { MdDoneOutline } from 'react-icons/md'
+import { RiShoppingCartLine } from 'react-icons/ri'
 
 import { getParts } from '../redux/resultSelectors'
 import { CategoryNav } from './Result'
+import { PopUp } from '../components/PopUp'
 
 const Wrapper = styled.div`
    width: 100%;
@@ -114,6 +116,11 @@ const Done = styled(MdDoneOutline)`
    fill: green;
    margin-right: 10px;
 `
+const Text = styled.p`
+   color: white;
+   margin-top: 30px;
+   text-align: center;
+`
 
 export const Details = () => {
 
@@ -122,6 +129,7 @@ export const Details = () => {
    const navigate = useNavigate()
 
    const goBack = () => navigate(-1)
+
    const addToCart = () => {
       let data = []
       if (localStorage.getItem('cart')) {
@@ -130,11 +138,18 @@ export const Details = () => {
       data.push(...detailInfo)
       localStorage.setItem("cart", JSON.stringify(data))
       setState(true)
+      togglePopup()
+   }
+
+   const togglePopup = () => {
+      setPopup(true)
+      setTimeout(() => setPopup(false), 5000)
    }
 
    const detailInfo = (result.data).filter(el => el.id == id)
 
    const [state, setState] = useState(false)
+   const [popup, setPopup] = useState(false)
 
    useEffect(() => {
       if (localStorage.getItem('cart')) {
@@ -170,6 +185,14 @@ export const Details = () => {
             })
          }
          <CategoryNav><BackButton onClick={goBack}>Назад</BackButton></CategoryNav>
+         {
+            popup &&
+            <PopUp>
+               <Done size='40px'/>
+               <Text>Товар успешно добавлен в корзину!</Text>
+               <Text>Для управления своими покупками нажмите на значок <RiShoppingCartLine size='30px'/> в правом верхнем углу</Text>
+            </PopUp>
+         }
       </>
    )
 }
