@@ -17,6 +17,12 @@ code {
    margin: 0;
    border: 0;
 }
+* {
+   scrollbar-width: none;
+}
+*::-webkit-scrollbar {
+   width: 0;
+}
 *,
 *:before,
 *:after {

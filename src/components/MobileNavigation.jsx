@@ -51,7 +51,7 @@ export const MobileNavigation = () => {
             <NavigationList>
                <Link onClick={() => setMenu(false)} to='/'>Главная</Link>
                <Link onClick={() => setMenu(false)} to='/about'>О Нас</Link>
-               <Link onClick={() => setMenu(false)} to='/delivery'>Доставка</Link>
+               <Link onClick={() => setMenu(false)} to='/delivery'>Доставка / Оплата</Link>
                <Link onClick={() => setMenu(false)} to='/contacts'>Контакты</Link>
             </NavigationList>
          }

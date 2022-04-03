@@ -23,7 +23,7 @@ export const Navigation = () => {
       <NavigationList>
          <Link to='/'>Главная</Link>
          <Link to='/about'>О Нас</Link>
-         <Link to='/delivery'>Доставка</Link>
+         <Link to='/delivery'>Доставка / Оплата</Link>
          <Link to='/contacts'>Контакты</Link>
       </NavigationList>
    )

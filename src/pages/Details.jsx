@@ -111,12 +111,12 @@ const BuyNotice = styled.div`
    display: flex;
    align-items: center;
 `
-const Done = styled(MdDoneOutline)`
+export const Done = styled(MdDoneOutline)`
    font-size: 16px;
    fill: green;
    margin-right: 10px;
 `
-const Text = styled.p`
+export const Text = styled.p`
    color: white;
    margin-top: 30px;
    text-align: center;
@@ -143,7 +143,7 @@ export const Details = () => {
 
    const togglePopup = () => {
       setPopup(true)
-      setTimeout(() => setPopup(false), 5000)
+      setTimeout(() => setPopup(false), 2500)
    }
 
    const detailInfo = (result.data).filter(el => el.id == id)

@@ -1,5 +1,15 @@
 import styled from 'styled-components'
 
+const Wrapper = styled.div`
+   width: 100%;
+   height: 100%;
+   background-color: tarnsparent;
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   transform: translate(-50%, -50%);
+   z-index: 100;
+`
 const PopUpWrapper = styled.div`
    width: 80%;
    height: 40%; 
@@ -29,8 +39,10 @@ const PopUpWrapper = styled.div`
 
 export const PopUp = ({ children }) => {
    return (
-      <PopUpWrapper>
-         {children}
-      </PopUpWrapper>
+      <Wrapper>
+         <PopUpWrapper>
+            {children}
+         </PopUpWrapper>
+      </Wrapper>
    )
 }

@@ -2,8 +2,13 @@ import { useForm, Controller } from "react-hook-form"
 import styled from 'styled-components'
 import { ImWarning } from 'react-icons/im'
 import Select from 'react-select'
+import { useState } from "react"
+import { Link } from "react-router-dom"
 
 import { Container } from "./Cart"
+import { PopUp } from "../components/PopUp"
+import { Done } from "./Details"
+import { Text } from "./Details"
 
 const Wrapper = styled.div`
    width: 100%;
@@ -34,6 +39,26 @@ const SubmitButton = styled.button`
 
    @media (min-width: 767px) {
    width: 30%;
+   }
+`
+const OkButton = styled(Link).attrs({ to: '/' })`
+   width: 50%;
+   height: 40px;
+   max-width: 375px;
+   margin: 30px auto;
+   color: white;
+   display: flex;
+   align-items: center;
+   justify-content: center;
+   border-radius: 10px;
+   border: 1px solid white;
+   background-color: transparent;
+
+   @media (min-width: 767px) {
+      width: 30%;
+   }
+   @media (min-width: 1024px) {
+      width: 15%;
    }
 `
 const Label = styled.label`
@@ -101,8 +126,11 @@ export const Form = () => {
       control,
    } = useForm()
 
+   const [popup, setPopup] = useState(true)
+
    const onSubmit = (data) => {
       console.log(JSON.stringify(data))
+      setPopup(true)
       reset()
    }
 
@@ -110,6 +138,11 @@ export const Form = () => {
       if (value) {
          options.find(option => option.value === value)
       }
+   }
+
+   const cleanLocalStorage = () => {
+      setPopup(false)
+      localStorage.removeItem('cart')
    }
 
    return (
@@ -201,6 +234,14 @@ export const Form = () => {
                <SubmitButton type="submit">Отправить</SubmitButton>
             </FormWrapper>
          </Container>
+         {
+            popup && 
+            <PopUp>
+               <Done size='40px'/>
+                  <Text>Ваша заявка отправлена! Мы свяжемся с Вами в ближайшее время.</Text> 
+                  <OkButton onClick={cleanLocalStorage}>Ok</OkButton>
+            </PopUp>
+         }
       </Wrapper>
    )
 }
